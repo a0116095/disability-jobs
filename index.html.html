@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공공기관 장애인 채용공고 모음</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: 한 줄 요약 → 필터 → 공고 표(모바일은 카드) → 바로가기 링크. 접근성 우선(큰 글씨 토글, 높은 대비, 키보드 포커스). */
+:root {
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --ink: #15211f;
+  --muted: #55625f;
+  --line: #d5dddb;
+  --accent: #0b5d66;
+  --accent-soft: #e0eff0;
+  --urgent: #b42318;
+  --urgent-soft: #fde8e6;
+  --soon: #8a5a00;
+  --soon-soft: #fdf1d6;
+  --ok: #1d6b3a;
+  --ok-soft: #e3f3e8;
+  --font-display: "IBM Plex Sans KR", "Noto Sans KR", system-ui, sans-serif;
+  --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --base: 16px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1716; --surface: #172220; --ink: #e8efed; --muted: #a3b2ae; --line: #2c3a37;
+    --accent: #5cc3cc; --accent-soft: #163538;
+    --urgent: #ff8a7a; --urgent-soft: #3a1b18; --soon: #f2c25c; --soon-soft: #362a10; --ok: #7fd49a; --ok-soft: #173023;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1716; --surface: #172220; --ink: #e8efed; --muted: #a3b2ae; --line: #2c3a37;
+  --accent: #5cc3cc; --accent-soft: #163538;
+  --urgent: #ff8a7a; --urgent-soft: #3a1b18; --soon: #f2c25c; --soon-soft: #362a10; --ok: #7fd49a; --ok-soft: #173023;
+  color-scheme: dark;
+}
+html.large { --base: 19px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--base); line-height: 1.6; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--accent); color: var(--surface); padding: 8px 14px; border-radius: 6px; z-index: 10; }
+.skip:focus { left: 16px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+header { background: var(--surface); border-bottom: 1px solid var(--line); }
+.head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; padding: 28px 0 22px; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: 1.75em; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+.lede { margin: 0; color: var(--muted); max-width: 62ch; }
+.size-toggle { display: flex; gap: 6px; }
+.size-toggle button { font: inherit; font-size: .9em; padding: 6px 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; cursor: pointer; }
+.size-toggle button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+
+.summary { display: flex; flex-wrap: wrap; gap: 10px 28px; padding: 16px 0; font-size: .95em; color: var(--muted); }
+.summary strong { color: var(--ink); font-family: var(--font-display); font-size: 1.35em; font-variant-numeric: tabular-nums; margin-right: 4px; }
+.notice { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: .92em; margin: 4px 0 20px; }
+
+.filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 18px; }
+.filters label { display: block; font-size: .85em; font-weight: 700; margin-bottom: 4px; }
+.filters select, .filters input[type="search"] { width: 100%; font: inherit; font-size: .95em; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.check { display: flex; align-items: center; gap: 8px; font-size: .95em; align-self: end; padding-bottom: 8px; }
+.check input { width: 20px; height: 20px; accent-color: var(--accent); }
+
+.table-box { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+caption { text-align: left; padding: 14px 16px 0; font-weight: 700; font-family: var(--font-display); }
+th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .82em; color: var(--muted); font-weight: 700; white-space: nowrap; }
+tbody tr:last-child td { border-bottom: 0; }
+.org { font-weight: 700; }
+.sub { display: block; color: var(--muted); font-size: .88em; font-weight: 400; }
+.tag { display: inline-block; font-size: .78em; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); margin: 4px 4px 0 0; white-space: nowrap; }
+.dl { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dday { display: inline-block; font-weight: 700; font-size: .82em; padding: 2px 9px; border-radius: 6px; margin-bottom: 4px; }
+.d-urgent { background: var(--urgent-soft); color: var(--urgent); }
+.d-soon { background: var(--soon-soft); color: var(--soon); }
+.d-ok { background: var(--ok-soft); color: var(--ok); }
+.d-closed { background: var(--line); color: var(--muted); }
+tr.closed td { opacity: .6; }
+.go { display: inline-block; font-weight: 700; text-decoration: none; padding: 7px 12px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+.go:hover { background: var(--accent); color: var(--surface); }
+.empty { padding: 28px 16px; text-align: center; color: var(--muted); }
+
+section.links { margin: 36px 0 12px; }
+h2 { font-family: var(--font-display); font-size: 1.2em; margin: 0 0 12px; }
+.link-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.lg { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.lg h3 { font-size: .95em; margin: 0 0 8px; }
+.lg ul { margin: 0; padding-left: 18px; }
+.lg li { margin: 4px 0; }
+footer { color: var(--muted); font-size: .85em; padding: 24px 0 40px; border-top: 1px solid var(--line); margin-top: 28px; }
+
+@media (max-width: 720px) {
+  thead { position: absolute; left: -9999px; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  tr { border-bottom: 1px solid var(--line); padding: 8px 0; }
+  tbody tr:last-child { border-bottom: 0; }
+  td { border: 0; padding: 4px 16px; }
+  td[data-label]::before { content: attr(data-label); display: block; font-size: .78em; color: var(--muted); font-weight: 700; }
+  td.cell-go { padding-bottom: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#list">공고 목록으로 건너뛰기</a>
+<header>
+  <div class="wrap head">
+    <div>
+      <h1>공기업·공공기관 장애인 채용공고</h1>
+      <p class="lede">장애인 제한경쟁·구분모집으로 뽑는 공기업과 공공기관 공고를 한곳에 모았습니다. 지원 전에 반드시 원문 공고의 자격요건과 마감 시각을 확인하세요.</p>
+    </div>
+    <div class="size-toggle" role="group" aria-label="글자 크기">
+      <button type="button" id="size-normal" aria-pressed="true">글자 보통</button>
+      <button type="button" id="size-large" aria-pressed="false">글자 크게</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <div class="summary" aria-live="polite">
+    <span><strong id="count-open">0</strong>건 접수 중</span>
+    <span><strong id="count-week">0</strong>건 3일 안에 마감</span>
+    <span>마지막 업데이트 <strong id="updated" style="font-size:1em"></strong></span>
+  </div>
+  <p class="notice">공고는 직접 찾아 확인한 뒤 수동으로 갱신합니다. 기관 사정으로 조기 마감되거나 일정이 바뀔 수 있습니다.</p>
+
+  <form class="filters" id="filters" aria-label="공고 필터" onsubmit="return false">
+    <div>
+      <label for="f-q">검색</label>
+      <input type="search" id="f-q" placeholder="기관명, 직무">
+    </div>
+    <div>
+      <label for="f-region">지역</label>
+      <select id="f-region"><option value="">전체 지역</option></select>
+    </div>
+    <div>
+      <label for="f-type">고용형태</label>
+      <select id="f-type"><option value="">전체</option></select>
+    </div>
+    <div>
+      <label for="f-sort">정렬</label>
+      <select id="f-sort">
+        <option value="deadline">마감 임박순</option>
+        <option value="recent">최근 등록순</option>
+        <option value="org">기관명순</option>
+      </select>
+    </div>
+    <label class="check" for="f-closed"><input type="checkbox" id="f-closed" checked> 마감된 공고 숨기기</label>
+  </form>
+
+  <div class="table-box" id="list" tabindex="-1">
+    <table>
+      <caption id="caption">채용공고 목록</caption>
+      <thead>
+        <tr><th scope="col">기관</th><th scope="col">채용 분야</th><th scope="col">근무지</th><th scope="col">접수 마감</th><th scope="col">공고</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <section class="links" aria-labelledby="links-h">
+    <h2 id="links-h">직접 찾아보기</h2>
+    <div class="link-groups">
+      <div class="lg">
+        <h3>공공기관 공식 채용 포털</h3>
+        <ul>
+          <li><a href="https://job.alio.go.kr" target="_blank" rel="noopener">잡알리오 (공공기관 채용정보시스템)</a></li>
+          <li><a href="https://www.gojobs.go.kr" target="_blank" rel="noopener">나라일터</a></li>        </ul>
+      </div>
+      <div class="lg">
+        <h3>장애인 고용 전문 기관</h3>
+        <ul>
+          <li><a href="https://www.kead.or.kr/bbs/jobinfo/bbsPage.do?menuId=MENU2201" target="_blank" rel="noopener">한국장애인고용공단 채용정보</a></li>
+          <li><a href="https://www.worktogether.or.kr" target="_blank" rel="noopener">워크투게더</a></li>
+          <li><a href="https://www.saramin.co.kr/zf_user/jobs/theme/worktogether" target="_blank" rel="noopener">사람인 장애인 채용관</a></li>
+        </ul>
+      </div>
+      <div class="lg">
+        <h3>키워드로 검색 (잡코리아)</h3>
+        <ul>
+          <li><a href="https://www.jobkorea.co.kr/Search/?stext=%EC%9E%A5%EC%95%A0%EC%9D%B8+%EC%A0%9C%ED%95%9C" target="_blank" rel="noopener">장애인 제한</a></li>
+          <li><a href="https://www.jobkorea.co.kr/Search/?stext=%EC%9E%A5%EC%95%A0%EC%9D%B8%EC%A0%9C%ED%95%9C%EA%B2%BD%EC%9F%81" target="_blank" rel="noopener">장애인제한경쟁</a></li>
+          <li><a href="https://www.jobkorea.co.kr/Search/?stext=%EC%9E%A5%EC%95%A0%EC%9D%B8+%EC%A0%9C%ED%95%9C%EC%B1%84%EC%9A%A9" target="_blank" rel="noopener">장애인 제한채용</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    출처: 잡코리아·인크루트(잡알리오 제공)·캐치·대한민국 정책브리핑에 게시된 공고를 확인하여 정리했습니다. 비영리 참고용 페이지이며, 최종 정보는 각 기관의 원문 공고를 따릅니다.
+  </div>
+</footer>
+
+<script>
+/* ===== 공고 데이터: 업데이트 때 이 부분만 고칩니다 ===== */
+const UPDATED = "2026-11-18 17:50";
+const JOBS = [
+  { org: "한국농어촌공사", unit: "청주지사", field: "공무직(청소원)", track: "보훈·장애인 제한경쟁", type: "공무직",
+    region: ["충북"], place: "충북 청주시", start: "2026-11-04", end: "2026-11-19T16:00",
+    url: "https://www.korea.kr/archive/recruitInfoView.do?dataId=398419" },
+  { org: "한국농어촌공사", unit: "철원화천지사", field: "공무직(청소원)", track: "보훈·장애인 제한경쟁", type: "공무직",
+    region: ["강원"], place: "강원 철원군", start: "2026-11-04", end: "2026-11-19T16:00",
+    url: "https://www.jobkorea.co.kr/Recruit/GI_Read/50316175" },
+  { org: "한국농어촌공사", unit: "영산강사업단", field: "공무직(청소원)", track: "보훈·장애인 제한경쟁", type: "공무직",
+    region: ["광주·전남"], place: "전남 목포시", start: "2026-11-05", end: "2026-11-20T16:00",
+    url: "https://www.jobkorea.co.kr/Recruit/GI_Read/50316369" },
+  { org: "서울메트로환경", unit: "", field: "공무직 사원(장애인)", track: "장애인 제한경쟁", type: "정규직",
+    region: ["서울"], place: "서울", start: "", end: "2026-11-20T23:59",
+    url: "https://m.incruit.com/jobdb_info/jobpost.asp?job=2610300002973" },
+  { org: "분당서울대학교병원", unit: "", field: "업무지원직 신입(안내·주차·미화·고객응대 등)", track: "장애인 제한경쟁", type: "정규직",
+    region: ["경기"], place: "경기 성남시 분당구", start: "", end: "2026-11-20T23:59",
+    url: "https://m.catch.co.kr/NCS/RecruitInfoDetails/580602" },
+  { org: "한국농어촌공사", unit: "제주지역본부", field: "공무직(청소원)", track: "보훈·장애인 제한경쟁", type: "공무직",
+    region: ["제주"], place: "제주 제주시", start: "2026-11-10", end: "2026-11-24T16:00",
+    url: "https://www.jobkorea.co.kr/Recruit/GI_Read/50344146" },
+  { org: "한국농어촌공사", unit: "김해양산부산지사·의령지사", field: "공무직(청소원)", track: "보훈·장애인 제한경쟁", type: "공무직",
+    region: ["경남"], place: "경남 김해시·의령군", start: "2026-11-10", end: "2026-11-24T16:00",
+    url: "https://www.jobkorea.co.kr/Recruit/GI_Read/50344094" },
+  { org: "우체국물류지원단", unit: "", field: "사무보조", track: "장애인 제한경쟁", type: "기간제",
+    region: ["서울", "충남", "광주·전남"], place: "서울 광진구 · 충남 계룡시 · 광주 광산구", start: "2026-11-17", end: "2026-11-25T14:00",
+    url: "https://www.jobkorea.co.kr/Recruit/GI_Read/50387843" },
+];
+/* ===================================================== */
+
+const $ = (id) => document.getElementById(id);
+const DAY = 86400000;
+
+function dday(end) {
+  const now = new Date();
+  const e = new Date(end);
+  if (e < now) return { label: "마감", cls: "d-closed", closed: true, days: -1 };
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const eDay = new Date(e.getFullYear(), e.getMonth(), e.getDate());
+  const d = Math.round((eDay - today) / DAY);
+  const label = d === 0 ? "오늘 마감" : "D-" + d;
+  const cls = d <= 1 ? "d-urgent" : d <= 3 ? "d-soon" : "d-ok";
+  return { label, cls, closed: false, days: d };
+}
+function fmtEnd(end) {
+  const e = new Date(end);
+  const w = "일월화수목금토"[e.getDay()];
+  const t = end.includes("T23:59") ? "" : " " + String(e.getHours()).padStart(2, "0") + ":" + String(e.getMinutes()).padStart(2, "0");
+  return (e.getMonth() + 1) + "월 " + e.getDate() + "일(" + w + ")" + t;
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function fillOptions() {
+  const regions = [...new Set(JOBS.flatMap((j) => j.region))].sort((a, b) => a.localeCompare(b, "ko"));
+  regions.forEach((r) => $("f-region").insertAdjacentHTML("beforeend", `<option>${esc(r)}</option>`));
+  const types = [...new Set(JOBS.map((j) => j.type))].sort((a, b) => a.localeCompare(b, "ko"));
+  types.forEach((t) => $("f-type").insertAdjacentHTML("beforeend", `<option>${esc(t)}</option>`));
+}
+
+function render() {
+  const q = $("f-q").value.trim().toLowerCase();
+  const region = $("f-region").value, type = $("f-type").value, sort = $("f-sort").value, hide = $("f-closed").checked;
+  let list = JOBS.map((j) => ({ ...j, dd: dday(j.end) }));
+  const openAll = list.filter((j) => !j.dd.closed);
+  $("count-open").textContent = openAll.length;
+  $("count-week").textContent = openAll.filter((j) => j.dd.days <= 3).length;
+
+  list = list.filter((j) =>
+    (!hide || !j.dd.closed) &&
+    (!region || j.region.includes(region)) &&
+    (!type || j.type === type) &&
+    (!q || (j.org + j.unit + j.field + j.track + j.place).toLowerCase().includes(q)));
+
+  list.sort((a, b) => {
+    if (sort === "org") return (a.org + a.unit).localeCompare(b.org + b.unit, "ko");
+    if (sort === "recent") return (b.start || "").localeCompare(a.start || "");
+    if (a.dd.closed !== b.dd.closed) return a.dd.closed ? 1 : -1;
+    return a.end.localeCompare(b.end);
+  });
+
+  $("caption").textContent = "채용공고 " + list.length + "건";
+  $("rows").innerHTML = list.length ? list.map((j) => `
+    <tr class="${j.dd.closed ? "closed" : ""}">
+      <td data-label="기관"><span class="org">${esc(j.org)}</span>${j.unit ? `<span class="sub">${esc(j.unit)}</span>` : ""}</td>
+      <td data-label="채용 분야">${esc(j.field)}<br><span class="tag">${esc(j.track)}</span><span class="tag">${esc(j.type)}</span></td>
+      <td data-label="근무지">${esc(j.place)}</td>
+      <td data-label="접수 마감" class="dl"><span class="dday ${j.dd.cls}">${j.dd.label}</span><br>${fmtEnd(j.end)}</td>
+      <td class="cell-go"><a class="go" href="${esc(j.url)}" target="_blank" rel="noopener" aria-label="${esc(j.org + " " + j.unit + " " + j.field)} 원문 공고 열기 (새 창)">원문 공고</a></td>
+    </tr>`).join("") : `<tr><td colspan="5" class="empty">조건에 맞는 공고가 없습니다. 필터를 바꿔 보세요.</td></tr>`;
+}
+
+function setSize(large) {
+  document.documentElement.classList.toggle("large", large);
+  $("size-large").setAttribute("aria-pressed", large);
+  $("size-normal").setAttribute("aria-pressed", !large);
+  try { localStorage.setItem("jobs-large", large ? "1" : ""); } catch (e) {}
+}
+
+$("updated").textContent = UPDATED;
+fillOptions();
+["f-q", "f-region", "f-type", "f-sort", "f-closed"].forEach((id) => $(id).addEventListener("input", render));
+$("size-normal").addEventListener("click", () => setSize(false));
+$("size-large").addEventListener("click", () => setSize(true));
+try { if (localStorage.getItem("jobs-large")) setSize(true); } catch (e) {}
+render();
+</script>
+</body>
+</html>
