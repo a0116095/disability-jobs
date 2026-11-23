@@ -205,7 +205,7 @@ footer { color: var(--muted); font-size: .85em; padding: 24px 0 40px; border-top
 
 <script>
 /* ===== 공고 데이터: 업데이트 때 이 부분만 고칩니다 ===== */
-const UPDATED = "2026-11-23 07:31";
+const UPDATED = "2026-11-23 13:46";
 const JOBS = [
   { org: "한국농어촌공사", unit: "제주지역본부", field: "공무직(청소원)", track: "보훈·장애인 제한경쟁", type: "공무직",
     region: ["제주"], place: "제주 제주시", start: "2026-11-10", end: "2026-11-24T16:00",
@@ -226,9 +226,6 @@ const JOBS = [
     region: ["서울", "경기", "인천", "대구·경북", "전북", "경남", "제주"],
     place: "서울 마포 · 경기 의정부·수원(2) · 인천 서구 · 대구 수성구 · 경북 구미 · 전북 전주 · 경남 창원(2) · 제주시", start: "2026-11-19", end: "2026-12-04T10:00",
     url: "https://kotsa1.career.co.kr" },
-  { org: "한국장애인고용공단", unit: "경기남부직업능력개발원", field: "특정업무직(운전원)", track: "장애인 가점(일반 공고)", type: "무기계약직",
-    region: ["경기"], place: "경기", start: "", end: "2026-11-23T11:00",
-    url: "https://www.job-post.co.kr/news/articleView.html?idxno=238915" },
   { org: "한국농업기술진흥원", unit: "", field: "2027년 상반기 체험형 청년인턴", track: "장애인 가점(일반 공고)", type: "인턴",
     region: ["대구·경북", "전북"], place: "대구 · 전북", start: "2026-11-18", end: "2026-12-02T23:59",
     url: "https://www.job-post.co.kr/news/articleView.html?idxno=239190" },
@@ -271,6 +268,39 @@ const JOBS = [
   { org: "부산항만공사", unit: "", field: "기간제 직원(장애인 바리스타) 기능 7급 · 계약 2026.12.22.~2027.12.21. · 이메일 접수", track: "장애인 제한", type: "기간제",
     region: ["부산"], place: "부산 (근무지·마감 시각 원문 확인)", start: "2026-11-16", end: "2026-12-01T23:59",
     url: "https://www.korea.kr/archive/recruitInfoView.do?dataId=399960" },
+  { org: "한국광해광업공단", unit: "", field: "무기계약직(공무직) 미화·경비 · 장애인 제한경쟁 (전체 23명 중 인원 원문 확인, 입사 2027-01-04)", track: "장애인 제한경쟁", type: "무기계약직",
+    region: ["서울", "강원"], place: "서울 · 강원 (분야별 근무지 원문 확인)", start: "2026-11-23", end: "2026-11-30T10:00",
+    url: "https://gongbueong.career.co.kr/jobs/b14e2d24-ca68-4853-b4aa-0f84aeb29e03" },
+  { org: "도로교통공단", unit: "", field: "2026년 4분기 실무직 및 기간제근로자 42명 (경영·사무, 경비·청소, 전기·전자, 정보통신 등 · 장애인 전형단계별 5% 가점)", track: "장애인 가점(일반 공고)", type: "무기계약직",
+    region: ["전국"], place: "전국 (근무지 원문 확인)", start: "2026-11-18", end: "2026-11-25T18:00",
+    url: "https://gongbueong.career.co.kr/jobs/0a387dd3-ff45-4b07-83df-fb2395f151fb" },
+  { org: "우체국금융개발원", unit: "", field: "2026년 10차 공개채용 · 전임직(미화원·예금고객상담·보험고객상담) 55명 (장애인 서류 10점 가점)", track: "장애인 가점(일반 공고)", type: "무기계약직",
+    region: ["서울", "부산", "대구·경북", "광주·전남"], place: "서울 · 부산 · 대구 · 광주 (마감 시각 원문 확인)", start: "2026-11-16", end: "2026-11-30T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/55453281-7845-434c-be36-c06c6ae2cc9f" },
+  { org: "한국동서발전", unit: "", field: "2027년 상반기 신입직원(대졸 일반·보훈, 고졸) 101명 (장애인 전형단계별 만점의 10% 가점, 어학요건 면제)", track: "장애인 가점(일반 공고)", type: "정규직",
+    region: ["울산", "경기", "강원", "충북", "충남", "광주·전남", "제주"], place: "울산(본사) 등 사업소 (마감 시각 원문 확인)", start: "2026-11-24", end: "2026-12-01T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/e50e19a1-6e7c-45f3-a704-11fae0b6581c" },
+  { org: "해양수산과학기술진흥원", unit: "", field: "2026년 제4차 신규직원(개방형직위·체험형 청년인턴) 4명 (장애인 서류 만점의 5% 가점)", track: "장애인 가점(일반 공고)", type: "인턴",
+    region: ["서울"], place: "서울 (마감 시각 원문 확인)", start: "2026-11-09", end: "2026-11-25T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/ffe23028-9f68-40da-b76f-85fcce93508d" },
+  { org: "우체국물류지원단", unit: "2027년 1분기 정기채용", field: "체험형 청년인턴 13명 (경영·사무, 장애인 우대 가점)", track: "장애인 가점(일반 공고)", type: "인턴",
+    region: ["서울", "경기", "광주·전남"], place: "서울 · 경기 · 광주·전남 (마감 시각 원문 확인)", start: "2026-11-17", end: "2026-12-01T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/90edea03-814e-4e72-a81c-a7e185dc8b68" },
+  { org: "우체국물류지원단", unit: "2027년 1분기 정기채용", field: "채용형 청년인턴 6명 (경영·사무, 장애인 우대)", track: "장애인 가점(일반 공고)", type: "인턴",
+    region: ["서울"], place: "서울 (마감 시각 원문 확인)", start: "2026-11-17", end: "2026-12-01T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/4d48804e-f026-4458-a2dc-edc177177e70" },
+  { org: "국방과학연구소", unit: "", field: "'27년 상반기 임용 공개채용 162명 (장애인 등 취업보호대상자 가산점)", track: "장애인 가점(일반 공고)", type: "정규직",
+    region: ["서울", "대전", "세종", "강원", "충남", "경남"], place: "대전(본소) 등 (마감 시각 원문 확인)", start: "2026-11-18", end: "2026-12-02T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/c3b94f82-ed6f-4485-80c4-36a5919b490f" },
+  { org: "신용보증재단중앙회", unit: "", field: "2026년 제2차 신입직원(5급 · 경영일반·AI) 6명 (장애인 우대)", track: "장애인 가점(일반 공고)", type: "정규직",
+    region: ["세종"], place: "세종 (마감 시각 원문 확인)", start: "2026-11-16", end: "2026-12-01T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/94e765e6-2621-47a3-ba60-58d01aa3454e" },
+  { org: "대한적십자사", unit: "재외동포지원본부", field: "무기계약직 1명 (장애인 서류전형 우선합격)", track: "장애인 가점(일반 공고)", type: "무기계약직",
+    region: ["서울"], place: "서울 (마감 시각 원문 확인)", start: "2026-10-16", end: "2026-11-26T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/2a9904c2-8862-4b7c-a242-ef3c8ce08e76" },
+  { org: "오송첨단의료산업진흥재단", unit: "", field: "2026년 제2차 직원(환경·에너지·안전) 1명 (장애인 우대)", track: "장애인 가점(일반 공고)", type: "정규직",
+    region: ["충북"], place: "충북 청주시 오송 (마감 시각 원문 확인)", start: "2026-11-10", end: "2026-11-24T23:59",
+    url: "https://gongbueong.career.co.kr/jobs/caf48a15-0fc1-4304-97d9-adf7511dd95c" },
 ];
 /* ===================================================== */
 
